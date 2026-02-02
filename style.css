@@ -29,7 +29,7 @@ body {
   height: auto;
 
   /* จาก -200px เปลี่ยนเป็นค่านุ่ม ๆ */
-  transform: translateX(-50px);
+  transform: translateX(-100px);
 }
 
 /* ===== แผงเกม (ขวา) ===== */
