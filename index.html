@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <title>เกมทาย 77 จังหวัด</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>เกมทาย 77 จังหวัด</h1>
 
-	<div id="layout">
+<h1>เกมทาย 77 จังหวัด</h1>
+
+<div id="layout">
+
+  <!-- ===== แผนที่ (ซ้าย) ===== -->
   <div id="map-container">
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -8429,19 +8433,26 @@
      id="tspan4208"
      x="730.60449"
      y="405.50546">Sakon Nakhon</tspan></text>
-</svg>>
+</svg>
+
+  </div>
+
+  <!-- ===== แผงควบคุมเกม (ขวา) ===== -->
   <div id="game-panel">
+
     <div id="timer">เวลา: 120 วินาที</div>
     <div id="score">ถูก: 0 / 77</div>
 
     <input type="text" id="answer" placeholder="พิมพ์ชื่อจังหวัด..." />
+
     <button onclick="startGame()">เริ่มเกมใหม่</button>
 
     <h3>จังหวัดที่ตอบถูกแล้ว</h3>
     <ul id="correct-list"></ul>
+
   </div>
+
 </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
