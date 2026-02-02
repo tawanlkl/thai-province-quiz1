@@ -15,21 +15,16 @@ body {
 #map-container {
   flex: 2;
   max-width: 750px;
-  border: 1px solid #ccc;
-
-  display: flex;
-  justify-content: center;   /* จัดกลางแนวนอน */
-  align-items: flex-start;
-  overflow: hidden;
+  max-height: 80vh;   /* 🔥 กันไม่ให้กินจอ */
+  overflow: hidden;  /* ตัดส่วนเกิน */
 }
 
 /* บังคับขนาด SVG */
 #map-container svg {
-  width: 750px;
+  width: 100%;
   height: auto;
-
-  /* จาก -200px เปลี่ยนเป็นค่านุ่ม ๆ */
-  transform: translateX(-100px);
+  max-height: 80vh;   /* 🔥 สูงไม่เกิน 80% ของจอ */
+  display: block;
 }
 
 /* ===== แผงเกม (ขวา) ===== */
