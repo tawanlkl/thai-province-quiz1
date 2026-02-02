@@ -2,12 +2,47 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 10px;
+  /* ❌ ห้ามมี text-align: center ใน body */
 }
 
 h1 {
-  text-align: center;
+  text-align: left;   /* หัวข้อไม่ต้องกลาง */
+  margin-left: 10px;
 }
 
+#layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;  /* บังคับชิดซ้าย */
+  gap: 20px;
+}
+
+/* =====================
+   แผนที่ (ซ้าย)
+===================== */
+#map-container {
+  flex: 0 0 auto;     /* ไม่ให้ขยายจนกลาง */
+  text-align: left;  /* กัน SVG ถูก center */
+}
+
+#map-container svg {
+  max-width: 700px;
+  width: 700px;
+  height: auto;
+  display: block;    /* กัน inline SVG center */
+}
+
+/* =====================
+   แผงเกม (ขวา)
+===================== */
+#game-panel {
+  flex: 1;
+  text-align: left;
+}
+
+/* =====================
+   ฟอร์ม + รายการ
+===================== */
 #answer {
   padding: 10px;
   font-size: 16px;
@@ -21,36 +56,23 @@ h1 {
 
 #correct-list li {
   background: #e6f7ff;
-  margin: 5px auto;
+  margin: 5px 0;   /* ❌ เอา auto ออก (auto = center) */
   padding: 5px;
   width: 200px;
 }
 
+/* =====================
+   สีแผนที่
+===================== */
 .correct {
-  fill: #00ff00 !important; /* เขียว */
+  fill: #00ff00 !important;
 }
 
 .wrong {
-  fill: #ff4444 !important; /* แดง */
+  fill: #ff4444 !important;
 }
 
 svg path {
   cursor: pointer;
   transition: fill 0.3s;
-}
-
-#layout {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-/* แผนที่อยู่ซ้าย */
-#map-container {
-  flex: 2;
-}
-
-/* แผงเกมอยู่ขวา */
-#game-panel {
-  flex: 1;
 }
