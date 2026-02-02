@@ -2,51 +2,49 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 10px;
-  /* ❌ ห้ามมี text-align: center ใน body */
 }
 
-h1 {
-  text-align: left;   /* หัวข้อไม่ต้องกลาง */
-  margin-left: 10px;
-}
-
+/* โครงหลัก */
 #layout {
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;  /* บังคับชิดซ้าย */
   gap: 20px;
 }
 
-/* =====================
-   แผนที่ (ซ้าย)
-===================== */
+/* ===== แผนที่ (ซ้าย) ===== */
 #map-container {
-  flex: 0 0 auto;     /* ไม่ให้ขยายจนกลาง */
-  text-align: left;  /* กัน SVG ถูก center */
+  flex: 2;
+  overflow: hidden;       /* ตัดพื้นที่ว่าง SVG */
+  max-width: 750px;       /* กันไม่ให้กินจอ */
+  border: 1px solid #ccc; /* เอาไว้ debug ดูขอบ */
 }
 
+/* บังคับขนาด SVG */
 #map-container svg {
-  max-width: 700px;
-  width: 700px;
+  width: 750px;
   height: auto;
-  display: block;    /* กัน inline SVG center */
+
+  /* 🔥 ดันแผนที่ไปซ้าย (แก้พื้นที่ทะเลโล่ง) */
+  transform: translateX(-200px);
 }
 
-/* =====================
-   แผงเกม (ขวา)
-===================== */
+/* ===== แผงเกม (ขวา) ===== */
 #game-panel {
   flex: 1;
-  text-align: left;
+  min-width: 260px;
 }
 
-/* =====================
-   ฟอร์ม + รายการ
-===================== */
+/* UI */
+h1 {
+  text-align: center;
+}
+
 #answer {
   padding: 10px;
   font-size: 16px;
-  width: 250px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 #correct-list {
@@ -56,14 +54,11 @@ h1 {
 
 #correct-list li {
   background: #e6f7ff;
-  margin: 5px 0;   /* ❌ เอา auto ออก (auto = center) */
+  margin: 5px 0;
   padding: 5px;
-  width: 200px;
 }
 
-/* =====================
-   สีแผนที่
-===================== */
+/* สีจังหวัด */
 .correct {
   fill: #00ff00 !important;
 }
