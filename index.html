@@ -4,85 +4,18 @@
   <meta charset="UTF-8">
   <title>เกมทาย 77 จังหวัด</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      text-align: center;
-      background: #1976d2;
-      color: white;
-      margin: 0;
-      padding: 15px;
-    }
-
-    #container {
-      display: flex;
-      gap: 20px;
-      padding: 20px;
-    }
-
-    #map-container {
-      flex: 2;
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-      min-height: 500px;
-    }
-
-    #game-panel {
-      flex: 1;
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-    }
-
-    #timer, #score {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    #answer {
-      width: 100%;
-      padding: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #correct-list {
-      max-height: 250px;
-      overflow-y: auto;
-      padding-left: 20px;
-    }
-
-    /* เวลาเดาจังหวัดถูก ให้ SVG class นี้เปลี่ยนสี */
-    .correct {
-      fill: #4caf50 !important;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-<h1>เกมทาย 77 จังหวัด</h1>
+  <h1>เกมทาย 77 จังหวัด</h1>
 
-<div id="container">
+  <div id="layout">
 
-  <!-- ================== แผนที่ ================== -->
-  <div id="map-container">
-    <svg
+    <div id="map-container">
+		
+		<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -95,8 +28,7 @@
    x="0px"
    y="0px"
    width="1051.164px"
-   height="1849.133px"
-   viewBox="0 0 1051.164 1849.133"
+   viewBox="-150 0 800 1849.133"
    enable-background="new 0 0 1051.164 1849.133"
    xml:space="preserve"
    inkscape:version="0.48.1 "
@@ -165,6 +97,7 @@
    clip-rule="evenodd"
    fill="#E0E0E0"
    width="1051.164"
+   height="1849.133"
    id="rect3" />
 <path
    clip-rule="evenodd"
@@ -8500,115 +8433,35 @@
      x="730.60449"
      y="405.50546">Sakon Nakhon</tspan></text>
 </svg>
+      
+    </div>
+
+    <!-- ================== แผงควบคุมเกม (ขวา) ================== -->
+    <div id="game-panel">
+
+      <div id="timer">เวลา: 300 วินาที</div>
+      <div id="score">ถูก: 0 / 77</div>
+
+      <br>
+
+      <input
+        type="text"
+        id="answer"
+        placeholder="พิมพ์ชื่อจังหวัด..."
+      />
+
+      <br><br>
+
+      <button onclick="startGame()">เริ่มเกมใหม่</button>
+
+      <hr>
+
+      <h3>จังหวัดที่ตอบถูกแล้ว</h3>
+      <ul id="correct-list"></ul>
+
+    </div>
 
   </div>
-
-  <!-- ================== แผงควบคุมเกม ================== -->
-  <div id="game-panel">
-
-    <div id="timer">เวลา: 300 วินาที</div>
-    <div id="score">ถูก: 0 / 77</div>
-
-    <br>
-
-    <input
-      type="text"
-      id="answer"
-      placeholder="พิมพ์ชื่อจังหวัด..."
-      autocomplete="off"
-    />
-
-    <br><br>
-
-    <button onclick="startGame()">เริ่มเกมใหม่</button>
-
-    <hr>
-
-    <h3>จังหวัดที่ตอบถูกแล้ว</h3>
-    <ul id="correct-list"></ul>
-
-  </div>
-</div>
-
-<!-- ================== JAVASCRIPT ================== -->
-<script>
-const provinces = [
-  "กรุงเทพมหานคร","กระบี่","กาญจนบุรี","กาฬสินธุ์","กำแพงเพชร",
-  "ขอนแก่น","จันทบุรี","ฉะเชิงเทรา","ชลบุรี","ชัยนาท",
-  "ชัยภูมิ","ชุมพร","เชียงราย","เชียงใหม่","ตรัง",
-  "ตราด","ตาก","นครนายก","นครปฐม","นครพนม",
-  "นครราชสีมา","นครศรีธรรมราช","นครสวรรค์","นนทบุรี","นราธิวาส",
-  "น่าน","บึงกาฬ","บุรีรัมย์","ปทุมธานี","ประจวบคีรีขันธ์",
-  "ปราจีนบุรี","ปัตตานี","พระนครศรีอยุธยา","พะเยา","พังงา",
-  "พัทลุง","พิจิตร","พิษณุโลก","เพชรบุรี","เพชรบูรณ์",
-  "แพร่","ภูเก็ต","มหาสารคาม","มุกดาหาร","แม่ฮ่องสอน",
-  "ยโสธร","ยะลา","ร้อยเอ็ด","ระนอง","ระยอง",
-  "ราชบุรี","ลพบุรี","ลำปาง","ลำพูน","เลย",
-  "ศรีสะเกษ","สกลนคร","สงขลา","สตูล","สมุทรปราการ",
-  "สมุทรสงคราม","สมุทรสาคร","สระแก้ว","สระบุรี","สิงห์บุรี",
-  "สุโขทัย","สุพรรณบุรี","สุราษฎร์ธานี","สุรินทร์","หนองคาย",
-  "หนองบัวลำภู","อ่างทอง","อำนาจเจริญ","อุดรธานี","อุตรดิตถ์",
-  "อุทัยธานี","อุบลราชธานี"
-];
-
-let correct = [];
-let timeLeft = 300;
-let timer;
-
-function startGame() {
-  correct = [];
-  timeLeft = 300;
-
-  document.getElementById("correct-list").innerHTML = "";
-  document.getElementById("score").innerText = "ถูก: 0 / 77";
-  document.getElementById("timer").innerText = "เวลา: 300 วินาที";
-
-  clearInterval(timer);
-  timer = setInterval(() => {
-    timeLeft--;
-    document.getElementById("timer").innerText =
-      "เวลา: " + timeLeft + " วินาที";
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      alert("หมดเวลา! คุณตอบถูก " + correct.length + " จังหวัด");
-    }
-  }, 1000);
-}
-
-function markCorrectByName(provinceName) {
-  const className = provinceName.replace(/\s+/g, '');
-  const el = document.querySelector('.' + className);
-
-  if (el) {
-    el.classList.add('correct');
-  } else {
-    console.log('ไม่พบจังหวัดใน SVG:', className);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("answer").addEventListener("keyup", function () {
-    const input = this.value.trim();
-
-    if (provinces.includes(input) && !correct.includes(input)) {
-
-      correct.push(input);
-
-      markCorrectByName(input);
-
-      const li = document.createElement("li");
-      li.innerText = input;
-      document.getElementById("correct-list").appendChild(li);
-
-      document.getElementById("score").innerText =
-        "ถูก: " + correct.length + " / 77";
-
-      this.value = "";
-    }
-  });
-});
-</script>
 
 </body>
 </html>
