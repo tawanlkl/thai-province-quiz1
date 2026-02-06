@@ -41,8 +41,6 @@ body {
   background: #fafafa;
 }
 
-}
-
 /* UI */
 h1 {
   text-align: center;
@@ -83,9 +81,4 @@ svg path {
 
 #map-container svg text {
   display: none;
-}
-
-/* บังคับให้ทุกจังหวัดเป็นสีเหลือง */
-#map-container svg path {
-  fill: #ffd700 !important;   /* สีเหลืองทอง */
 }
