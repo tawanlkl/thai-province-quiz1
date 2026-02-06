@@ -21,21 +21,11 @@ let correct = [];
 let timeLeft = 300;
 let timer;
 
-/* =====================
-   เริ่มเกมใหม่
-===================== */
 function startGame() {
   correct = [];
   timeLeft = 300;
-
   document.getElementById("correct-list").innerHTML = "";
   document.getElementById("score").innerText = "ถูก: 0 / 77";
-  document.getElementById("timer").innerText = "เวลา: 300 วินาที";
-
-  // ล้างสีจังหวัด
-  document.querySelectorAll(".correct, .wrong").forEach(el => {
-    el.classList.remove("correct", "wrong");
-  });
 
   clearInterval(timer);
   timer = setInterval(() => {
@@ -49,10 +39,6 @@ function startGame() {
     }
   }, 1000);
 }
-
-/* =====================
-   ทำสีจังหวัดจากชื่อ
-===================== */
 function markCorrectByName(provinceName) {
   const className = provinceName.replace(/\s+/g, '');
   const el = document.querySelector('.' + className);
@@ -60,50 +46,25 @@ function markCorrectByName(provinceName) {
   if (el) {
     el.classList.add('correct');
   } else {
-    console.log('ไม่พบจังหวัดใน SVG:', className);
+    console.log('ไม่พบจังหวัด:', className);
   }
 }
 
-/* =====================
-   รับคำตอบจากช่องพิมพ์
-===================== */
 document.addEventListener("DOMContentLoaded", () => {
-  const answerInput = document.getElementById("answer");
+  document.getElementById("answer").addEventListener("keyup", function () {
+    const input = this.value.trim();
 
-  answerInput.addEventListener("keyup", function (e) {
-    const inputText = this.value.trim();
+    if (provinces.includes(input) && !correct.includes(input)) {
+  markCorrectByName(input);
 
-    // ไม่อยู่ในลิสต์จังหวัด
-    if (!provinces.includes(inputText)) return;
+      const li = document.createElement("li");
+      li.innerText = input;
+      document.getElementById("correct-list").appendChild(li);
 
-    // เคยตอบแล้ว
-    if (correct.includes(inputText)) {
+      document.getElementById("score").innerText =
+        "ถูก: " + correct.length + " / 77";
+
       this.value = "";
-      return;
-    }
-
-    // ✅ บันทึกว่าตอบถูกแล้ว
-    correct.push(inputText);
-
-    // ทำสีจังหวัดบนแผนที่
-    markCorrectByName(inputText);
-
-    // เพิ่มในลิสต์ด้านขวา
-    const li = document.createElement("li");
-    li.innerText = inputText;
-    document.getElementById("correct-list").appendChild(li);
-
-    // อัปเดตคะแนน
-    document.getElementById("score").innerText =
-      "ถูก: " + correct.length + " / 77";
-
-    // ล้างช่องพิมพ์
-    this.value = "";
-
-    // ชนะครบ 77
-    if (correct.length === 77) {
-      clearInterval(timer);
-      alert("🎉 ยินดีด้วย! คุณตอบครบทั้ง 77 จังหวัดแล้ว!");
     }
   });
 });
