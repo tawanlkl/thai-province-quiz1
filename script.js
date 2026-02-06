@@ -18,12 +18,12 @@ const provinces = [
 ];
 
 let correct = [];
-let timeLeft = 120;
+let timeLeft = 300;
 let timer;
 
 function startGame() {
   correct = [];
-  timeLeft = 120;
+  timeLeft = 300;
   document.getElementById("correct-list").innerHTML = "";
   document.getElementById("score").innerText = "ถูก: 0 / 77";
 
