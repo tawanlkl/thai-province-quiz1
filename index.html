@@ -4,16 +4,81 @@
   <meta charset="UTF-8">
   <title>เกมทาย 77 จังหวัด</title>
 
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      background: #1976d2;
+      color: white;
+      margin: 0;
+      padding: 15px;
+    }
+
+    #container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    #map-container {
+      flex: 2;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      min-height: 500px;
+    }
+
+    #game-panel {
+      flex: 1;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    #timer, #score {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #answer {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #correct-list {
+      max-height: 250px;
+      overflow-y: auto;
+      padding-left: 20px;
+    }
+
+    /* เวลาเดาจังหวัดถูก ให้ SVG class นี้เปลี่ยนสี */
+    .correct {
+      fill: #4caf50 !important;
+    }
+  </style>
 </head>
+
 <body>
 
-  <h1>เกมทาย 77 จังหวัด</h1>
+<h1>เกมทาย 77 จังหวัด</h1>
 
-  <div id="layout">
-
-    <div id="map-container">
+<div id="container">
 		
 		<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
