@@ -84,3 +84,11 @@ svg path {
 #map-container svg text {
   display: none;
 }
+
+/* ซ่อนชื่อทั้งหมดแบบแรงสุด */
+svg text,
+svg tspan {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
