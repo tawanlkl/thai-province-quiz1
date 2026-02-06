@@ -16,91 +16,14 @@ const provinces = [
   "หนองบัวลำภู","อ่างทอง","อำนาจเจริญ","อุดรธานี","อุตรดิตถ์",
   "อุทัยธานี","อุบลราชธานี"
 ];
-const provinceNameMap = {
-  "เชียงราย": "Chiang_Rai",
-  "เชียงใหม่": "Chiang_Mai",
-  "พะเยา": "Phayao",
-  "ลำปาง": "Lampang",
-  "ลำพูน": "Lamphun",
-  "แพร่": "Phrae",
-  "น่าน": "Nan",
-  "แม่ฮ่องสอน": "Mae_Hong_Son",
-  "อุตรดิตถ์": "Uttaradit",
-  "ตาก": "Tak",
-  "สุโขทัย": "Sukhothai",
-  "พิษณุโลก": "Phitsanulok",
-  "พิจิตร": "Phichit",
-  "กำแพงเพชร": "Kamphaeng_Phet",
-  "นครสวรรค์": "Nakhon_Sawan",
-  "อุทัยธานี": "Uthai_Thani",
-  "เพชรบูรณ์": "Phetchabun",
-  "เลย": "Loei",
-  "หนองคาย": "Nong_Khai",
-  "หนองบัวลำภู": "Nong_Bua_Lamphu",
-  "อุดรธานี": "Udon_Thani",
-  "สกลนคร": "Sakon_Nakhon",
-  "นครพนม": "Nakhon_Phanom",
-  "มุกดาหาร": "Mukdahan",
-  "กาฬสินธุ์": "Kalasin",
-  "มหาสารคาม": "Maha_Sarakham",
-  "ร้อยเอ็ด": "Roi_Et",
-  "ยโสธร": "Yasothon",
-  "อำนาจเจริญ": "Amnat_Charoen",
-  "อุบลราชธานี": "Ubon_Ratchathani",
-  "ศรีสะเกษ": "Si_Sa_Ket",
-  "สุรินทร์": "Surin",
-  "บุรีรัมย์": "Buri_Ram",
-  "ชัยภูมิ": "Chaiyaphum",
-  "นครราชสีมา": "Nakhon_Ratchasima",
-  "ขอนแก่น": "Khon_Kaen",
-  "ชัยนาท": "Chai_Nat",
-  "สิงห์บุรี": "Sing_Buri",
-  "ลพบุรี": "Lop_Buri",
-  "อ่างทอง": "Ang_Thong",
-  "พระนครศรีอยุธยา": "Phra_Nakhon_Si_Ayutthaya",
-  "สระบุรี": "Saraburi",
-  "ปทุมธานี": "Pathum_Thani",
-  "นนทบุรี": "Nonthaburi",
-  "กรุงเทพมหานคร": "Bangkok",
-  "สมุทรปราการ": "Samut_Prakan",
-  "สมุทรสาคร": "Samut_Sakhon",
-  "สมุทรสงคราม": "Samut_Songkhram",
-  "นครปฐม": "Nakhon_Pathom",
-  "ราชบุรี": "Ratchaburi",
-  "กาญจนบุรี": "Kanchanaburi",
-  "เพชรบุรี": "Phetchaburi",
-  "ประจวบคีรีขันธ์": "Prachuap_Khiri_Khan",
-  "ชุมพร": "Chumphon",
-  "ระนอง": "Ranong",
-  "สุราษฎร์ธานี": "Surat_Thani",
-  "พังงา": "Phang_Nga",
-  "ภูเก็ต": "Phuket",
-  "กระบี่": "Krabi",
-  "ตรัง": "Trang",
-  "พัทลุง": "Phatthalung",
-  "สงขลา": "Songkhla",
-  "สตูล": "Satun",
-  "ปัตตานี": "Pattani",
-  "ยะลา": "Yala",
-  "นราธิวาส": "Narathiwat",
-  "ชลบุรี": "Chonburi",
-  "ระยอง": "Rayong",
-  "จันทบุรี": "Chanthaburi",
-  "ตราด": "Trat",
-  "ฉะเชิงเทรา": "Chachoengsao",
-  "ปราจีนบุรี": "Prachinburi",
-  "สระแก้ว": "Sa_Kaeo",
-  "นครนายก": "Nakhon_Nayok"
-};
-
 
 let correct = [];
 let timeLeft = 300;
 let timer;
 
-/* =======================
-   เริ่มเกม
-======================= */
+/* =====================
+   เริ่มเกมใหม่
+===================== */
 function startGame() {
   correct = [];
   timeLeft = 300;
@@ -109,13 +32,10 @@ function startGame() {
   document.getElementById("score").innerText = "ถูก: 0 / 77";
   document.getElementById("timer").innerText = "เวลา: 300 วินาที";
 
-  // ล้างสีแผนที่
-  document.querySelectorAll("svg path").forEach(p => {
-    p.classList.remove("correct", "wrong");
+  // ล้างสีจังหวัด
+  document.querySelectorAll(".correct, .wrong").forEach(el => {
+    el.classList.remove("correct", "wrong");
   });
-
-  // ซ่อน label ตอนเริ่ม
-  document.body.classList.remove("show-labels");
 
   clearInterval(timer);
   timer = setInterval(() => {
@@ -126,70 +46,49 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(timer);
       alert("หมดเวลา! คุณตอบถูก " + correct.length + " จังหวัด");
-      showAnswers();
     }
   }, 1000);
 }
 
-/* =======================
-   แปลงชื่อเป็น class
-======================= */
-function toClassName(name) {
-  return name.replace(/\s+/g, '');
-}
-
-/* =======================
-   ระบายสีจังหวัดบนแผนที่
-======================= */
+/* =====================
+   ทำสีจังหวัดจากชื่อ
+===================== */
 function markCorrectByName(provinceName) {
-  const engClass = provinceNameMap[provinceName];
-
-  if (!engClass) {
-    console.log("ไม่มี mapping สำหรับ:", provinceName);
-    return;
-  }
-
-  const el = document.querySelector('.' + engClass);
+  const className = provinceName.replace(/\s+/g, '');
+  const el = document.querySelector('.' + className);
 
   if (el) {
     el.classList.add('correct');
   } else {
-    console.log('ไม่พบ class ใน SVG:', engClass);
+    console.log('ไม่พบจังหวัดใน SVG:', className);
   }
 }
 
-/* =======================
-   โหมดเฉลย (โชว์ชื่อ)
-======================= */
-function showAnswers() {
-  document.body.classList.add("show-labels");
-}
-
-/* =======================
-   Event หลัก
-======================= */
+/* =====================
+   รับคำตอบจากช่องพิมพ์
+===================== */
 document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("answer");
+  const answerInput = document.getElementById("answer");
 
-  // เริ่มเกมทันที
-  startGame();
-
-  input.addEventListener("keyup", function (e) {
+  answerInput.addEventListener("keyup", function (e) {
     const inputText = this.value.trim();
 
+    // ไม่อยู่ในลิสต์จังหวัด
     if (!provinces.includes(inputText)) return;
+
+    // เคยตอบแล้ว
     if (correct.includes(inputText)) {
       this.value = "";
       return;
     }
 
-    // บันทึกคำตอบ
+    // ✅ บันทึกว่าตอบถูกแล้ว
     correct.push(inputText);
 
-    // ระบายสีแผนที่
+    // ทำสีจังหวัดบนแผนที่
     markCorrectByName(inputText);
 
-    // แสดงใน list
+    // เพิ่มในลิสต์ด้านขวา
     const li = document.createElement("li");
     li.innerText = inputText;
     document.getElementById("correct-list").appendChild(li);
@@ -198,13 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("score").innerText =
       "ถูก: " + correct.length + " / 77";
 
+    // ล้างช่องพิมพ์
     this.value = "";
 
-    // ถ้าครบหมด
-    if (correct.length === provinces.length) {
+    // ชนะครบ 77
+    if (correct.length === 77) {
       clearInterval(timer);
-      alert("เก่งมาก! คุณตอบครบ 77 จังหวัดแล้ว 🎉");
-      showAnswers();
+      alert("🎉 ยินดีด้วย! คุณตอบครบทั้ง 77 จังหวัดแล้ว!");
     }
   });
 });
