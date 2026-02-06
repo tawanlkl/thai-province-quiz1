@@ -15,15 +15,15 @@ body {
 #map-container {
   flex: 2;
   max-width: 750px;
-  max-height: 80vh;   /* 🔥 กันไม่ให้กินจอ */
-  overflow: hidden;  /* ตัดส่วนเกิน */
+  max-height: 80vh;
+  overflow: hidden;
 }
 
 /* บังคับขนาด SVG */
 #map-container svg {
   width: 100%;
   height: auto;
-  max-height: 80vh;   /* 🔥 สูงไม่เกิน 80% ของจอ */
+  max-height: 80vh;
   display: block;
 }
 
@@ -79,6 +79,12 @@ svg path {
   transition: fill 0.3s;
 }
 
-#map-container svg text {
-  display: none;
+/* =========================
+   ซ่อนชื่อจังหวัด (แรงสุด)
+========================= */
+svg text,
+svg tspan {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
