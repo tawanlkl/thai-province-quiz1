@@ -98,3 +98,31 @@ h1 {
 #map-container svg text {
   display: none !important;
 }
+
+/* ================= FORCE THAI MAP YELLOW ================= */
+
+/* เจาะ class ที่เจอจริงใน path ของคุณ */
+#map-container svg .landxx,
+#map-container svg .th-56,
+#map-container svg path.landxx,
+#map-container svg path[class*="th-"],
+#map-container svg path {
+  fill: #ffd700 !important;
+  stroke: #333 !important;
+}
+
+/* ถ้า SVG มี style ฝังใน <g> หรือ element อื่น */
+#map-container svg g path {
+  fill: #ffd700 !important;
+  stroke: #333 !important;
+}
+
+/* กันกรณี SVG ใส่ fill เป็น inline */
+#map-container svg path[fill] {
+  fill: #ffd700 !important;
+}
+
+/* ซ่อนชื่อ */
+#map-container svg text {
+  display: none !important;
+}
