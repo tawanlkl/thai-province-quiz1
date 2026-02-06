@@ -1,76 +1,86 @@
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  forceAllProvincesYellow();
-});
-
-/* ===============================
-   FORCE ทุกจังหวัดเป็นสีเหลือง
-   =============================== */
-function forceAllProvincesYellow() {
-  const svg = document.querySelector("#map-container svg");
-  if (!svg) {
-    console.warn("❌ ไม่พบ SVG ใน #map-container");
-    return;
-  }
-
-  const paths = svg.querySelectorAll("path");
-
-  paths.forEach(path => {
-    // ข้าม path ที่เป็นเส้น / decoration เล็กๆ (ถ้ามี)
-    // ถ้าไม่อยากกรอง ให้ลบบรรทัด if นี้ทิ้งได้
-    if (path.getAttribute("d")?.length < 50) return;
-
-    path.style.fill = "#ffd700";   // เหลือง
-    path.style.stroke = "#333";
-    path.style.strokeWidth = "1";
-
-    // ล้าง class เกมเก่า
-    path.classList.remove("correct", "wrong");
-  });
-
-  console.log("✅ Provinces forced to yellow:", paths.length);
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
 }
 
-/* ===============================
-   GAME: ทำจังหวัดถูก
-   ใช้เมื่อ user ตอบถูก
-   =============================== */
-function markCorrect(pathEl) {
-  if (!pathEl) return;
-  pathEl.classList.remove("wrong");
-  pathEl.classList.add("correct");
-  pathEl.style.fill = "#00ff00"; // เขียว
+/* โครงหลัก */
+#layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
 }
 
-/* ===============================
-   GAME: ทำจังหวัดผิด
-   =============================== */
-function markWrong(pathEl) {
-  if (!pathEl) return;
-  pathEl.classList.remove("correct");
-  pathEl.classList.add("wrong");
-  pathEl.style.fill = "#ff4444"; // แดง
+/* ===== แผนที่ (ซ้าย) ===== */
+#map-container {
+  flex: 2;
+  max-width: 750px;
+  max-height: 80vh;   /* 🔥 กันไม่ให้กินจอ */
+  overflow: hidden;  /* ตัดส่วนเกิน */
 }
 
-/* ===============================
-   ตัวอย่าง: คลิกจังหวัดแล้วเปลี่ยนสี
-   (ไว้ทดสอบ)
-   =============================== */
-document.addEventListener("click", (e) => {
-  if (e.target.tagName.toLowerCase() === "path") {
-    // toggle test
-    if (e.target.classList.contains("correct")) {
-      markWrong(e.target);
-    } else {
-      markCorrect(e.target);
-    }
-  }
-});
-
-/* ===============================
-   รีเซ็ตเกม (กลับเป็นเหลืองหมด)
-   =============================== */
-function resetMap() {
-  forceAllProvincesYellow();
+/* บังคับขนาด SVG */
+#map-container svg {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;   /* 🔥 สูงไม่เกิน 80% ของจอ */
+  display: block;
 }
-</script>
+
+/* ===== แผงเกม (ขวา) ===== */
+#game-panel {
+  flex: 1;
+  min-width: 260px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 10px;
+  border-left: 2px solid #ddd;
+  background: #fafafa;
+}
+
+}
+
+/* UI */
+h1 {
+  text-align: center;
+}
+
+#answer {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#correct-list {
+  list-style: none;
+  padding: 0;
+}
+
+#correct-list li {
+  background: #e6f7ff;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+/* สีจังหวัด */
+.correct {
+  fill: #00ff00 !important;
+}
+
+.wrong {
+  fill: #ff4444 !important;
+}
+
+svg path {
+  cursor: pointer;
+  transition: fill 0.3s;
+}
+
+#map-container svg text {
+  display: none;
+}
