@@ -33,22 +33,43 @@ body {
   display: block;
 }
 
-/* 🔥🔥🔥 FORCE ALL PROVINCES YELLOW 🔥🔥🔥 */
-/* ครอบคลุมทุกกรณี */
-#map-container svg * {
+/* ================== IMPORTANT RESET SVG ================== */
+/* กันไม่ให้พื้นหลัง / ทะเล เหลือง */
+#map-container svg rect,
+#map-container svg .sea,
+#map-container svg .ocean {
+  fill: #ffffff !important;
+}
+
+/* reset path ทั้งหมดก่อน */
+#map-container svg path {
+  fill: #ffffff !important;
+  stroke: #999 !important;
+}
+
+/* ================== PROVINCES ONLY (YELLOW) ================== */
+/* จังหวัด (จาก class ที่คุณมีจริง) */
+#map-container svg .landxx,
+#map-container svg path.landxx,
+#map-container svg path[class*="th-"] {
   fill: #ffd700 !important;
-  stroke: #666 !important;
+  stroke: #333 !important;
+}
+
+/* เผื่ออยู่ใน <g> */
+#map-container svg g .landxx,
+#map-container svg g path[class*="th-"] {
+  fill: #ffd700 !important;
+  stroke: #333 !important;
 }
 
 /* ================== GAME PANEL (RIGHT) ================== */
 #game-panel {
   flex: 1;
   min-width: 260px;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   padding: 10px;
   border-left: 2px solid #ddd;
   background: #fafafa;
@@ -88,41 +109,12 @@ h1 {
 
 /* ================== SVG INTERACTION ================== */
 #map-container svg path,
-#map-container svg polygon,
-#map-container svg rect {
+#map-container svg polygon {
   cursor: pointer;
   transition: fill 0.3s;
 }
 
 /* ซ่อนตัวหนังสือใน SVG */
-#map-container svg text {
-  display: none !important;
-}
-
-/* ================= FORCE THAI MAP YELLOW ================= */
-
-/* เจาะ class ที่เจอจริงใน path ของคุณ */
-#map-container svg .landxx,
-#map-container svg .th-56,
-#map-container svg path.landxx,
-#map-container svg path[class*="th-"],
-#map-container svg path {
-  fill: #ffd700 !important;
-  stroke: #333 !important;
-}
-
-/* ถ้า SVG มี style ฝังใน <g> หรือ element อื่น */
-#map-container svg g path {
-  fill: #ffd700 !important;
-  stroke: #333 !important;
-}
-
-/* กันกรณี SVG ใส่ fill เป็น inline */
-#map-container svg path[fill] {
-  fill: #ffd700 !important;
-}
-
-/* ซ่อนชื่อ */
 #map-container svg text {
   display: none !important;
 }
