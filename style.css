@@ -41,8 +41,6 @@ body {
   background: #fafafa;
 }
 
-}
-
 /* UI */
 h1 {
   text-align: center;
@@ -87,5 +85,13 @@ svg path {
 
 #map-container svg path {
   fill: yellow !important;
+  stroke: #999 !important;
+}
+
+/* บังคับให้ทุกจังหวัดเป็นสีเหลือง (แรงสุด) */
+#map-container svg path,
+#map-container svg polygon,
+#map-container svg g path {
+  fill: #ffd700 !important;
   stroke: #999 !important;
 }
