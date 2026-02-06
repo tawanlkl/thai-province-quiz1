@@ -1,3 +1,6 @@
+// =======================
+// ข้อมูลจังหวัด 77 จังหวัด
+// =======================
 const provinces = [
   "กรุงเทพมหานคร","กระบี่","กาญจนบุรี","กาฬสินธุ์","กำแพงเพชร",
   "ขอนแก่น","จันทบุรี","ฉะเชิงเทรา","ชลบุรี","ชัยนาท",
@@ -17,54 +20,110 @@ const provinces = [
   "อุทัยธานี","อุบลราชธานี"
 ];
 
-let correct = [];
+// =======================
+// ตัวแปรเกม
+// =======================
 let timeLeft = 300;
-let timer;
+let timer = null;
+let score = 0;
+let guessed = [];
 
+// =======================
+// DOM
+// =======================
+const timeEl = document.getElementById("time");
+const scoreEl = document.getElementById("score");
+const inputEl = document.getElementById("answerInput");
+const listEl = document.getElementById("correctList");
+
+// =======================
+// เริ่มเกม
+// =======================
 function startGame() {
-  correct = [];
   timeLeft = 300;
-  document.getElementById("correct-list").innerHTML = "";
-  document.getElementById("score").innerText = "ถูก: 0 / 77";
+  score = 0;
+  guessed = [];
 
-  clearInterval(timer);
-  timer = setInterval(() => {
-    timeLeft--;
-    document.getElementById("timer").innerText =
-      "เวลา: " + timeLeft + " วินาที";
+  timeEl.textContent = timeLeft;
+  scoreEl.textContent = score;
+  listEl.innerHTML = "";
+  inputEl.value = "";
+  inputEl.disabled = false;
 
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      alert("หมดเวลา! คุณตอบถูก " + correct.length + " จังหวัด");
-    }
-  }, 1000);
+  if (timer) clearInterval(timer);
+  timer = setInterval(updateTimer, 1000);
 }
-function markCorrectByName(provinceName) {
-  const className = provinceName.replace(/\s+/g, '');
-  const el = document.querySelector('.' + className);
 
-  if (el) {
-    el.classList.add('correct');
-  } else {
-    console.log('ไม่พบจังหวัด:', className);
+// =======================
+// นับเวลา
+// =======================
+function updateTimer() {
+  timeLeft--;
+  timeEl.textContent = timeLeft;
+
+  if (timeLeft <= 0) {
+    clearInterval(timer);
+    inputEl.disabled = true;
+    alert(`หมดเวลา! คุณตอบถูก ${score} จังหวัด`);
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("answer").addEventListener("keyup", function () {
-    const input = this.value.trim();
+// =======================
+// เช็คคำตอบ
+// =======================
+function checkAnswer(raw) {
+  const answer = raw.trim();
 
-    if (provinces.includes(input) && !correct.includes(input)) {
-  markCorrectByName(input);
+  // ไม่อยู่ในรายชื่อ
+  if (!provinces.includes(answer)) return;
 
-      const li = document.createElement("li");
-      li.innerText = input;
-      document.getElementById("correct-list").appendChild(li);
+  // ตอบซ้ำ
+  if (guessed.includes(answer)) return;
 
-      document.getElementById("score").innerText =
-        "ถูก: " + correct.length + " / 77";
+  // ถูกต้อง
+  guessed.push(answer);
+  score++;
 
-      this.value = "";
-    }
-  });
+  scoreEl.textContent = score;
+  addToList(answer);
+  highlightProvince(answer);
+
+  if (score === 77) {
+    clearInterval(timer);
+    alert("🎉 ครบ 77 จังหวัดแล้ว!");
+  }
+}
+
+// =======================
+// เพิ่มในลิสต์
+// =======================
+function addToList(name) {
+  const li = document.createElement("li");
+  li.textContent = name;
+  listEl.appendChild(li);
+}
+
+// =======================
+// ไฮไลต์จังหวัดใน SVG
+// คุณต้องแก้ให้ตรงกับ id/class ใน SVG จริง
+// =======================
+function highlightProvince(name) {
+  // ตัวอย่าง ถ้า SVG ใช้ id = ชื่อจังหวัด
+  // const el = document.getElementById(name);
+  // if (el) el.classList.add("correct");
+
+  console.log("Highlight:", name);
+}
+
+// =======================
+// Event input
+// =======================
+inputEl.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    checkAnswer(inputEl.value);
+    inputEl.value = "";
+  }
 });
+
+// เริ่มเกมอัตโนมัติ
+startGame();
