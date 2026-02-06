@@ -21,11 +21,24 @@ let correct = [];
 let timeLeft = 300;
 let timer;
 
+/* =======================
+   เริ่มเกม
+======================= */
 function startGame() {
   correct = [];
   timeLeft = 300;
+
   document.getElementById("correct-list").innerHTML = "";
   document.getElementById("score").innerText = "ถูก: 0 / 77";
+  document.getElementById("timer").innerText = "เวลา: 300 วินาที";
+
+  // ล้างสีแผนที่
+  document.querySelectorAll("svg path").forEach(p => {
+    p.classList.remove("correct", "wrong");
+  });
+
+  // ซ่อน label ตอนเริ่ม
+  document.body.classList.remove("show-labels");
 
   clearInterval(timer);
   timer = setInterval(() => {
@@ -36,35 +49,79 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(timer);
       alert("หมดเวลา! คุณตอบถูก " + correct.length + " จังหวัด");
+      showAnswers();
     }
   }, 1000);
 }
+
+/* =======================
+   แปลงชื่อเป็น class
+======================= */
+function toClassName(name) {
+  return name.replace(/\s+/g, '');
+}
+
+/* =======================
+   ระบายสีจังหวัดบนแผนที่
+======================= */
 function markCorrectByName(provinceName) {
-  const className = provinceName.replace(/\s+/g, '');
+  const className = toClassName(provinceName);
   const el = document.querySelector('.' + className);
 
   if (el) {
     el.classList.add('correct');
   } else {
-    console.log('ไม่พบจังหวัด:', className);
+    console.warn('❌ ไม่พบ path ของจังหวัด:', className);
   }
 }
 
+/* =======================
+   โหมดเฉลย (โชว์ชื่อ)
+======================= */
+function showAnswers() {
+  document.body.classList.add("show-labels");
+}
+
+/* =======================
+   Event หลัก
+======================= */
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("answer").addEventListener("keyup", function () {
-    const input = this.value.trim();
+  const input = document.getElementById("answer");
 
-    if (provinces.includes(input) && !correct.includes(input)) {
-  markCorrectByName(input);
+  // เริ่มเกมทันที
+  startGame();
 
-      const li = document.createElement("li");
-      li.innerText = input;
-      document.getElementById("correct-list").appendChild(li);
+  input.addEventListener("keyup", function (e) {
+    const inputText = this.value.trim();
 
-      document.getElementById("score").innerText =
-        "ถูก: " + correct.length + " / 77";
-
+    if (!provinces.includes(inputText)) return;
+    if (correct.includes(inputText)) {
       this.value = "";
+      return;
+    }
+
+    // บันทึกคำตอบ
+    correct.push(inputText);
+
+    // ระบายสีแผนที่
+    markCorrectByName(inputText);
+
+    // แสดงใน list
+    const li = document.createElement("li");
+    li.innerText = inputText;
+    document.getElementById("correct-list").appendChild(li);
+
+    // อัปเดตคะแนน
+    document.getElementById("score").innerText =
+      "ถูก: " + correct.length + " / 77";
+
+    this.value = "";
+
+    // ถ้าครบหมด
+    if (correct.length === provinces.length) {
+      clearInterval(timer);
+      alert("เก่งมาก! คุณตอบครบ 77 จังหวัดแล้ว 🎉");
+      showAnswers();
     }
   });
 });
