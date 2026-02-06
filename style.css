@@ -15,15 +15,15 @@ body {
 #map-container {
   flex: 2;
   max-width: 750px;
-  max-height: 80vh;
-  overflow: hidden;
+  max-height: 80vh;   /* 🔥 กันไม่ให้กินจอ */
+  overflow: hidden;  /* ตัดส่วนเกิน */
 }
 
 /* บังคับขนาด SVG */
 #map-container svg {
   width: 100%;
   height: auto;
-  max-height: 80vh;
+  max-height: 80vh;   /* 🔥 สูงไม่เกิน 80% ของจอ */
   display: block;
 }
 
@@ -39,6 +39,8 @@ body {
   padding: 10px;
   border-left: 2px solid #ddd;
   background: #fafafa;
+}
+
 }
 
 /* UI */
@@ -67,8 +69,7 @@ h1 {
 
 /* สีจังหวัด */
 .correct {
-  fill: #4caf50 !important;
-  stroke: #1b5e20 !important;
+  fill: #00ff00 !important;
 }
 
 .wrong {
@@ -80,19 +81,6 @@ svg path {
   transition: fill 0.3s;
 }
 
-/* =========================
-   ซ่อนชื่อจังหวัด (แรงสุด)
-========================= */
-/* ===== ซ่อนชื่อจังหวัดตอนเล่น ===== */
-svg text,
-svg tspan {
+#map-container svg text {
   display: none;
-}
-
-/* ===== โหมดเฉลย: โชว์ชื่อจังหวัด ===== */
-.show-labels svg text,
-.show-labels svg tspan {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
 }
