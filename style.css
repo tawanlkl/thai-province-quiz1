@@ -1,25 +1,37 @@
+/* ================== RESET / BASE ================== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 10px;
 }
 
-/* โครงหลัก */
+/* ================== TITLE ================== */
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ================== LAYOUT ================== */
 #layout {
   display: flex;
   align-items: flex-start;
   gap: 20px;
 }
 
-/* ===== แผนที่ (ซ้าย) ===== */
+/* ================== MAP (LEFT) ================== */
 #map-container {
   flex: 2;
   max-width: 750px;
   max-height: 80vh;
   overflow: hidden;
+  border: 1px solid #ccc;
 }
 
-/* บังคับขนาด SVG */
+/* SVG responsive */
 #map-container svg {
   width: 100%;
   height: auto;
@@ -27,7 +39,7 @@ body {
   display: block;
 }
 
-/* ===== แผงเกม (ขวา) ===== */
+/* ================== GAME PANEL (RIGHT) ================== */
 #game-panel {
   flex: 1;
   min-width: 260px;
@@ -41,17 +53,17 @@ body {
   background: #fafafa;
 }
 
-/* UI */
-h1 {
-  text-align: center;
-}
-
+/* ================== UI ================== */
 #answer {
   padding: 10px;
   font-size: 16px;
   width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+}
+
+#reset-btn {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 #correct-list {
@@ -65,26 +77,22 @@ h1 {
   padding: 5px;
 }
 
-/* สีจังหวัด */
+/* ================== GAME COLORS ================== */
 .correct {
-  fill: #00ff00 !important;
+  fill: #00ff00 !important; /* เขียว */
 }
 
 .wrong {
-  fill: #ff4444 !important;
+  fill: #ff4444 !important; /* แดง */
 }
 
-svg path {
+/* ================== SVG BASIC ================== */
+#map-container svg path {
   cursor: pointer;
   transition: fill 0.3s;
 }
 
-/* =========================
-   ซ่อนชื่อจังหวัด (แรงสุด)
-========================= */
-svg text,
-svg tspan {
+/* ซ่อนชื่อใน SVG (ถ้ามี text) */
+#map-container svg text {
   display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
 }
