@@ -85,7 +85,7 @@ svg path {
   display: none;
 }
 
-/* บังคับให้ทุกจังหวัดเป็นสีเหลือง */
 #map-container svg path {
-  fill: #ffd700 !important;   /* สีเหลืองทอง */
+  fill: yellow !important;
+  stroke: #999 !important;
 }
