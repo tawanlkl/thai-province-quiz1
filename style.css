@@ -1,31 +1,6 @@
-/* ================== RESET / BASE ================== */
-* {
-  box-sizing: border-box;
-}
+/* ================== SVG MAP CLEAN ================== */
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 10px;
-}
-
-/* ================== LAYOUT ================== */
-#layout {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-/* ================== MAP (LEFT) ================== */
-#map-container {
-  flex: 2;
-  max-width: 750px;
-  max-height: 80vh;
-  overflow: hidden;
-  border: 1px solid #ccc;
-}
-
-/* SVG size */
+/* ขนาด SVG */
 #map-container svg {
   width: 100%;
   height: auto;
@@ -33,96 +8,48 @@ body {
   display: block;
 }
 
-/* ================== IMPORTANT RESET SVG ================== */
-/* กันไม่ให้พื้นหลัง / ทะเล เหลือง */
-#map-container svg rect,
-#map-container svg .sea,
-#map-container svg .ocean {
-  fill: #ffffff !important;
-}
-
-/* reset path ทั้งหมดก่อน */
-#map-container svg path {
-  fill: #ffffff !important;
+/* ---------------- RESET EVERYTHING ---------------- */
+/* รีเซ็ตทุกอย่างก่อน (กัน style ฝังใน svg) */
+#map-container svg * {
+  fill: none !important;
   stroke: #999 !important;
 }
 
-/* ================== PROVINCES ONLY (YELLOW) ================== */
-/* จังหวัด (จาก class ที่คุณมีจริง) */
-#map-container svg .landxx,
-#map-container svg path.landxx,
-#map-container svg path[class*="th-"] {
-  fill: #ffd700 !important;
-  stroke: #333 !important;
-}
-
-/* ================== GAME PANEL (RIGHT) ================== */
-#game-panel {
-  flex: 1;
-  min-width: 260px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  border-left: 2px solid #ddd;
-  background: #fafafa;
-}
-
-/* ================== UI ================== */
-h1 {
-  text-align: center;
-}
-
-#answer {
-  padding: 10px;
-  font-size: 16px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-#correct-list {
-  list-style: none;
-  padding: 0;
-}
-
-#correct-list li {
-  background: #e6f7ff;
-  margin: 5px 0;
-  padding: 5px;
-}
-
-/* ================== GAME COLORS ================== */
-.correct {
-  fill: #00ff00 !important;
-}
-
-.wrong {
-  fill: #ff4444 !important;
-}
-
-/* ================== SVG INTERACTION ================== */
-#map-container svg path,
-#map-container svg polygon {
-  cursor: pointer;
-  transition: fill 0.3s;
-}
-
-/* ซ่อนตัวหนังสือใน SVG */
-#map-container svg text {
-  display: none !important;
-}
-
-/* เหลืองเฉพาะ path จังหวัด */
-#map-container svg path.landxx,
-#map-container svg path[class*="th-"] {
-  fill: #ffd700 !important;
-  stroke: #333 !important;
-}
-
-/* พื้นหลังไม่เหลือง */
+/* ---------------- BACKGROUND / SEA ---------------- */
+/* พื้นหลัง / ทะเล = ขาว */
 #map-container svg rect,
 #map-container svg .background,
 #map-container svg .sea,
 #map-container svg .ocean {
   fill: #ffffff !important;
+  stroke: none !important;
+}
+
+/* ---------------- PROVINCES ONLY ---------------- */
+/* เหลืองเฉพาะจังหวัด */
+#map-container svg path.landxx,
+#map-container svg path[class^="th-"],
+#map-container svg path[class*=" th-"] {
+  fill: #ffd700 !important;
+  stroke: #333 !important;
+}
+
+/* ---------------- TEXT OFF ---------------- */
+#map-container svg text {
+  display: none !important;
+}
+
+/* ---------------- INTERACTION ---------------- */
+#map-container svg path {
+  cursor: pointer;
+  transition: fill 0.3s;
+}
+
+/* ---------------- GAME COLORS (OVERRIDE) ---------------- */
+#map-container svg path.correct {
+  fill: #00ff00 !important;
+}
+
+#map-container svg path.wrong {
+  fill: #ff4444 !important;
 }
