@@ -82,9 +82,16 @@ svg path {
 /* =========================
    ซ่อนชื่อจังหวัด (แรงสุด)
 ========================= */
+/* ===== ซ่อนชื่อจังหวัดตอนเล่น ===== */
 svg text,
 svg tspan {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
+  display: none;
+}
+
+/* ===== โหมดเฉลย: โชว์ชื่อจังหวัด ===== */
+.show-labels svg text,
+.show-labels svg tspan {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
