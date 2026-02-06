@@ -56,13 +56,6 @@ body {
   stroke: #333 !important;
 }
 
-/* เผื่ออยู่ใน <g> */
-#map-container svg g .landxx,
-#map-container svg g path[class*="th-"] {
-  fill: #ffd700 !important;
-  stroke: #333 !important;
-}
-
 /* ================== GAME PANEL (RIGHT) ================== */
 #game-panel {
   flex: 1;
@@ -117,4 +110,19 @@ h1 {
 /* ซ่อนตัวหนังสือใน SVG */
 #map-container svg text {
   display: none !important;
+}
+
+/* เหลืองเฉพาะ path จังหวัด */
+#map-container svg path.landxx,
+#map-container svg path[class*="th-"] {
+  fill: #ffd700 !important;
+  stroke: #333 !important;
+}
+
+/* พื้นหลังไม่เหลือง */
+#map-container svg rect,
+#map-container svg .background,
+#map-container svg .sea,
+#map-container svg .ocean {
+  fill: #ffffff !important;
 }
