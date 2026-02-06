@@ -142,13 +142,19 @@ function toClassName(name) {
    ระบายสีจังหวัดบนแผนที่
 ======================= */
 function markCorrectByName(provinceName) {
-  const className = toClassName(provinceName);
-  const el = document.querySelector('.' + className);
+  const engClass = provinceNameMap[provinceName];
+
+  if (!engClass) {
+    console.log("ไม่มี mapping สำหรับ:", provinceName);
+    return;
+  }
+
+  const el = document.querySelector('.' + engClass);
 
   if (el) {
     el.classList.add('correct');
   } else {
-    console.warn('❌ ไม่พบ path ของจังหวัด:', className);
+    console.log('ไม่พบ class ใน SVG:', engClass);
   }
 }
 
